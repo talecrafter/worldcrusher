@@ -4,12 +4,12 @@ using System.Collections.Generic;
 
 public class NodeConnectionDisplay : MonoBehaviour {
 
-    void Start() {
+	public Node fromNode;
+	public Node toNode;
 
-    }
-
-    void Update() {
-
-    }
+	public override string ToString()
+	{
+		return "Connection from " + fromNode.ToString() + " to " + toNode.ToString();
+	}
 
 }

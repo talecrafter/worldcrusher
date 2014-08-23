@@ -26,7 +26,7 @@ public class NodeGrid : IEnumerable<Node> {
 		{
 			for (int column = 0; column < width; column++)
 			{
-				_grid[row, column] = new Node(row, column);
+				_grid[row, column] = new Node(column:column, row:row);
             }
 		}
 	}

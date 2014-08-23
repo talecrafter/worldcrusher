@@ -8,13 +8,18 @@ public class Node {
 
 	public float x, y;
 
-	private Dictionary<Direction, Node> connections = new Dictionary<Direction, Node>();
-
-	public Node(int column, int row)
+	private Dictionary<Direction, Node> _connections = new Dictionary<Direction, Node>();
+	public Dictionary<Direction, Node> connections
 	{
-		this.row = row;
-		this.column = column;
+		get
+		{
+			return _connections;
+		}
 	}
+
+	// ================================================================================
+	//  position helper
+	// --------------------------------------------------------------------------------
 
 	public Vector3 position
 	{
@@ -24,25 +29,68 @@ public class Node {
 		}
 	}
 
+	public Vector3 positionFront
+	{
+		get
+		{
+			return new Vector3(x, y, -0.2f);
+		}
+	}
+
+	public Vector3 positionBehind
+	{
+		get
+		{
+			return new Vector3(x, y, 0.2f);
+		}
+	}
+
+	// ================================================================================
+	//  contructor
+	// --------------------------------------------------------------------------------
+
+	public Node(int column, int row)
+	{
+		this.row = row;
+		this.column = column;
+	}
+
+	// ================================================================================
+	//  public methods
+	// --------------------------------------------------------------------------------
+
 	public void Connect(Node other, Direction direction)
 	{
-		if (HasConnection(other))
+		if (other == null)
+			return;
+
+		if (HasConnection(other) || HasConnection(direction))
 		{
-			Debug.LogError("Node already connected");
 			return;
 		}
 
-		connections[direction] = other;
+		if (other.HasConnection(this) || other.HasConnection(direction.Reversed()))
+        {
+			return;
+		}
+
+		_connections[direction] = other;
+		other.AttachIncomingConnection(this, direction.Reversed());
+	}
+
+	public void AttachIncomingConnection(Node other, Direction direction)
+	{
+		_connections[direction] = other;
 	}
 
 	public bool HasConnection(Direction direction)
 	{
-		return connections.ContainsKey(direction);
+		return _connections.ContainsKey(direction);
 	}
 
 	public bool HasConnection(Node node)
 	{
-		return connections.ContainsValue(node);
+		return _connections.ContainsValue(node);
 	}
 
 	public override string ToString()
