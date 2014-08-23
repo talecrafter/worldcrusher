@@ -10,6 +10,7 @@ public class Game : MonoBehaviour {
 
 	public World world = new World();
 	public InterfaceManager interfaceManager = null;
+	public Messenger messenger = null;
 	public InputController inputController = null;
 	public PlayerController playerController = null;
 
@@ -24,6 +25,10 @@ public class Game : MonoBehaviour {
 		}
 	}
 
+	// ================================================================================
+	//  unity methods
+	// --------------------------------------------------------------------------------
+
 	void Awake()
 	{
 		if (Instance != null && Instance != this)
@@ -37,8 +42,21 @@ public class Game : MonoBehaviour {
 		DontDestroyOnLoad(gameObject);
 
 		interfaceManager = GetComponent<InterfaceManager>();
+		messenger = GetComponent<Messenger>();
 		inputController = GetComponent<InputController>();
 		playerController = GetComponent<PlayerController>();
 	}
 
+	// ================================================================================
+	//  public methods
+	// --------------------------------------------------------------------------------
+
+	public void Restart()
+	{
+		WorldGenerator generator = Object.FindObjectOfType<WorldGenerator>();
+		generator.ResetWorld();
+
+		player.NewRound();
+		enemy.NewRound();
+	}
 }

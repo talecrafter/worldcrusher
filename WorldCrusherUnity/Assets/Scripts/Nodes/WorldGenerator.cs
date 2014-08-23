@@ -30,14 +30,6 @@ public class WorldGenerator : MonoBehaviour {
 		ResetWorld();
     }
 
-	void Update()
-	{
-		if (Input.GetKeyDown(KeyCode.R))
-		{
-			ResetWorld();
-		}
-	}
-
 	private void CreateWorld()
 	{
 		NodeGrid grid = new NodeGrid(gridWidth, gridHeight);
@@ -139,7 +131,7 @@ public class WorldGenerator : MonoBehaviour {
 		}
 	}
 
-	private void ResetWorld()
+	public void ResetWorld()
 	{
 		DestroyWorld();
 		CreateWorld();

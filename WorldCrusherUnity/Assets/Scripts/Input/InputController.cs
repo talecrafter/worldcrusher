@@ -38,13 +38,36 @@ public class InputController : MonoBehaviour {
 	{
 		CheckKeyboard();
 		CheckMouse();
+
+		if (Input.GetKeyDown(KeyCode.R))
+		{
+			Game.Instance.Restart();
+		}
 	}
 
 	private void CheckMouse()
 	{
-		if (Input.GetMouseButtonDown(0))
-		{
+		// look for node under cursor
+		CheckMouseSelection();
 
+		// activate focused node
+		if (Input.GetMouseButtonDown(1) || Input.GetButtonDown("Use"))
+		{
+			Game.Instance.playerController.Use();
+		}
+	}
+
+	private static void CheckMouseSelection()
+	{		
+		Transform hit = Utilities2D.GetHitFromPointer();
+
+		if (hit == null)
+			return;
+
+		NodeDisplay selection = hit.GetComponent<NodeDisplay>();
+		if (Input.GetMouseButtonDown(0) && selection != null)
+		{
+			Game.Instance.playerController.Select(selection.node);
 		}
 	}
 

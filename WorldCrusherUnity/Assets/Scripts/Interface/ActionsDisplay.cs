@@ -25,6 +25,11 @@ public class ActionsDisplay : MonoBehaviour {
 
 		for (int i = 0; i < actionsMax; i++)
 		{
+			if (i < actionsLeft)
+				GUI.color = Color.white;
+			else
+				GUI.color = new Color(1.0f, 1.0f, 1.0f, 0.3f);
+
 			Rect rect = new Rect(Screen.width - i * (actionIcon.width + offset) - margin - actionIcon.width, margin, actionIcon.width, actionIcon.height);
 			GUI.DrawTexture(rect, actionIcon);
 		}

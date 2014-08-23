@@ -30,4 +30,34 @@ public class Faction {
 		defenses.Clear();
 	}
 
+	public void PrepareAttack(Node node)
+	{
+		if (actionsLeft > 0)
+		{
+			attacks.Add(node);
+		}
+	}
+
+	public void RemoveAttack(Node node)
+	{
+		if (attacks.Contains(node))
+			attacks.Remove(node);
+	}
+
+	public void PrepareDefence(Node node)
+	{
+		if (actionsLeft > 0)
+		{
+			defenses.Add(node);
+		}
+	}
+
+	public void RemoveDefense(Node node)
+	{
+		if (defenses.Contains(node))
+		{
+			defenses.Remove(node);
+		}
+	}
+
 }
