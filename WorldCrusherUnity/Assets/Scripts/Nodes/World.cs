@@ -1,15 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
-public class World : MonoBehaviour {
+public class World {
 
-    void Start() {
+	public List<Node> nodes = new List<Node>();
 
-    }
-
-    void Update() {
-
-    }
-
+	public void Clear()
+	{
+		nodes.Clear();
+	}
 }

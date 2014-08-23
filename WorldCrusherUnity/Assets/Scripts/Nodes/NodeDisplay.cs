@@ -2,6 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class NodeConnection {
+public class NodeDisplay : MonoBehaviour {
+
+	public Node node = null;
+
 
 }

@@ -6,9 +6,11 @@ public class Game : MonoBehaviour {
 
 	public static Game Instance = null;
 
+	public World world = new World();
+
 	void Awake()
 	{
-		if (Instance != null)
+		if (Instance != null && Instance != this)
 		{
 			DestroyImmediate(gameObject);
 			return;
