@@ -4,9 +4,14 @@ TextureImporter:
   fileIDToRecycleName:
     21300000: worlds
     21300002: white
-    21300004: green
+    21300004: planet0
     21300006: worlds_2
     21300008: Connection
+    21300010: cloud
+    21300012: selection_highlight
+    21300014: planet1
+    21300016: planet2
+    21300018: planet3
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -58,7 +63,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: green
+    - name: planet0
       rect:
         serializedVersion: 2
         x: 386
@@ -82,11 +87,61 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1089
-        y: 1931
+        y: 1920
         width: 300
-        height: 19
+        height: 41
       alignment: 4
       pivot: {x: 0, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cloud
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 1453
+        width: 238
+        height: 238
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: selection_highlight
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 1453
+        width: 184
+        height: 191
+      alignment: 9
+      pivot: {x: .388338, y: .188984022}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: planet1
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 1114
+        width: 238
+        height: 238
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: planet2
+      rect:
+        serializedVersion: 2
+        x: 392
+        y: 1114
+        width: 238
+        height: 238
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: planet3
+      rect:
+        serializedVersion: 2
+        x: 724
+        y: 1114
+        width: 238
+        height: 238
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 

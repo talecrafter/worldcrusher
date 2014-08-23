@@ -2,11 +2,24 @@
 using System.Collections;
 using System.Collections.Generic;
 
+// ================================================================================
+//  Node Delegates
+// --------------------------------------------------------------------------------
+
+public delegate void NodeManipulation(Node node);
+public delegate bool ExamineNodeConnection(Node fromNode, Node toNode);
+
+// ================================================================================
+//  class Node
+// --------------------------------------------------------------------------------
+
 public class Node {
 
-	public int row, column;
+	public int row, column; // position in grid
 
-	public float x, y;
+	public float x, y; // world position
+
+	public Faction faction = Faction.Enemy;
 
 	private Dictionary<Direction, Node> _connections = new Dictionary<Direction, Node>();
 	public Dictionary<Direction, Node> connections
@@ -16,6 +29,8 @@ public class Node {
 			return _connections;
 		}
 	}
+
+	public NodeDisplay display;
 
 	// ================================================================================
 	//  position helper
@@ -59,6 +74,14 @@ public class Node {
 	//  public methods
 	// --------------------------------------------------------------------------------
 
+	public void SetFaction(Faction faction)
+	{
+		this.faction = faction;
+
+		if (display != null)
+			display.UpdateFaction();
+	}
+
 	public void Connect(Node other, Direction direction)
 	{
 		if (other == null)
@@ -81,6 +104,17 @@ public class Node {
 	public void AttachIncomingConnection(Node other, Direction direction)
 	{
 		_connections[direction] = other;
+	}
+
+	public void DetachIncomingConnection(Node other, Direction direction)
+	{
+		if (_connections.ContainsKey(direction))
+			_connections.Remove(direction);
+	}
+
+	public Node GetConnection(Direction direction)
+	{
+		return _connections[direction];
 	}
 
 	public bool HasConnection(Direction direction)

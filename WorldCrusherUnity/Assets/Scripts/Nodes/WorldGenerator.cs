@@ -19,13 +19,15 @@ public class WorldGenerator : MonoBehaviour {
 	[Range(0, 1.0f)]
 	public float randomDeleteChance = 0.05f;
 
+	public List<Sprite> planetImages = new List<Sprite>();
+
 	public NodeDisplay nodePrefab;
-	public NodeConnectionDisplay connectionPrefab;
+	public NodeConnection connectionPrefab;
 
 	private GameObject _worldObject = null;
 
     void Awake() {
-		CreateWorld();
+		ResetWorld();
     }
 
 	void Update()
@@ -49,18 +51,29 @@ public class WorldGenerator : MonoBehaviour {
 
 		// cut some of the connections
 
-		// gather nodes in islands
-
-		// destroy small islands
+		// gather nodes in islands and destroy small islands
+		grid.RemoveUnconnectedNodes();
 
 		// positions
-		CalculatePositions(grid);		
+		CalculatePositions(grid);
 		OffsetCenters(grid); // offset nodes to get a more organic feeling
-
-		// determine player start nodes
 
 		// create nodes on the map
 		CreateNodesFromGrid(grid);
+
+		// determine player start 
+		PlaceStartNodes();
+	}
+
+	private static void PlaceStartNodes()
+	{
+		Game.Instance.world.PickStartNode();
+		int maxStartNodes = Random.Range(3, 6);
+		NodeList nodes = Game.Instance.world.nodes.GetConnectedNodes(Game.Instance.world.home, null, maxStartNodes);
+		foreach (var item in nodes)
+		{
+			item.SetFaction(Faction.Player);
+		}
 	}
 
 	private void DeleteCorners(NodeGrid grid)
@@ -130,6 +143,7 @@ public class WorldGenerator : MonoBehaviour {
 	{
 		DestroyWorld();
 		CreateWorld();
+		Game.Instance.playerController.SetSelectionToHome();
 	}
 
 	private void DestroyWorld()
@@ -144,25 +158,29 @@ public class WorldGenerator : MonoBehaviour {
 
 		_worldObject = new GameObject("World");
 
+		// create nodes itself
 		foreach (var node in grid)
 		{
 			NodeDisplay nodeDisplay = Instantiate(nodePrefab, node.position, Quaternion.identity) as NodeDisplay;
 			nodeDisplay.gameObject.name = node.ToString();
-            nodeDisplay.node = node;
+			nodeDisplay.SetNode(node);
 
 			// variable size
 			float size = Random.Range(1.0f - sizeVariation, 1.0f + sizeVariation);
 			nodeDisplay.transform.localScale = new Vector3(size, size, size);
+			nodeDisplay.SetImage(planetImages.PickRandom());
 
 			nodeDisplay.transform.parent = _worldObject.transform;
 
 			world.nodes.Add(node);
-
-			CreateConnections(node);
         }
 
-		Debug.Log(world.nodes.Count + " nodes created");
-	}
+		// create connections between the nodes
+		foreach (var node in grid)
+		{
+			CreateConnections(node);
+		}
+    }
 
 	private void CreateConnections(Node fromNode)
 	{
@@ -170,10 +188,16 @@ public class WorldGenerator : MonoBehaviour {
 		{
 			Node toNode = item.Value;
 
-			NodeConnectionDisplay connection = Instantiate(connectionPrefab, fromNode.positionBehind, Quaternion.identity) as NodeConnectionDisplay;
+			if (fromNode.display.HasConnection(toNode))
+				continue;
+
+			NodeConnection connection = Instantiate(connectionPrefab, fromNode.positionBehind, Quaternion.identity) as NodeConnection;
 
 			connection.fromNode = fromNode;
 			connection.toNode = toNode;
+
+			fromNode.display.AttachConnection(toNode, connection);
+			toNode.display.AttachConnection(fromNode, connection);
 
 			connection.gameObject.name = connection.ToString();
 			connection.transform.parent = _worldObject.transform;

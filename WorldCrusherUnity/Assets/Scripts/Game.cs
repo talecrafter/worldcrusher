@@ -6,7 +6,19 @@ public class Game : MonoBehaviour {
 
 	public static Game Instance = null;
 
+	private GameState _state = GameState.Running;
+
 	public World world = new World();
+	public InputController inputController = null;
+	public PlayerController playerController = null;
+
+	public bool IsRunning
+	{
+		get
+		{
+			return _state == GameState.Running;
+		}
+	}
 
 	void Awake()
 	{
@@ -19,6 +31,9 @@ public class Game : MonoBehaviour {
 		Instance = this;
 
 		DontDestroyOnLoad(gameObject);
+
+		inputController = GetComponent<InputController>();
+		playerController = GetComponent<PlayerController>();
 	}
 
 }

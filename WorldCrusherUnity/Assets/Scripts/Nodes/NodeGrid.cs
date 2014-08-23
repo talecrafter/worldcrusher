@@ -2,8 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
-
-public delegate void NodeManipulation(Node node);
+using System.Linq;
 
 public class NodeGrid : IEnumerable<Node> {
 
@@ -82,6 +81,72 @@ public class NodeGrid : IEnumerable<Node> {
 		}
 	}
 
+	public void RemoveUnconnectedNodes()
+	{
+		ClearFlags();
+
+		List<NodeList> islands = new List<NodeList>();
+
+		foreach (var item in this)
+		{
+			if (!IsFlagged(item))
+			{
+				islands.Add(GetConnectedNodes(item, HasConnection));
+			}
+		}
+
+		islands = islands.OrderBy(x => x.Count).Reverse().ToList();
+
+		for (int i = 1; i < islands.Count; i++)
+		{
+			Delete(islands[i]);
+		}
+	}
+
+	public bool HasConnection(Node fromNode, Node toNode)
+	{
+		return fromNode.HasConnection(toNode);
+	}
+
+	public NodeList GetConnectedNodes(Node startNode, ExamineNodeConnection examineConnection)
+	{
+		NodeList gathered = new NodeList();
+
+		if (startNode == null)
+			return gathered;
+
+		Queue<Node> openList = new Queue<Node>();
+		openList.Enqueue(startNode);
+		MarkAsFlagged(startNode);
+
+		while(openList.Count > 0)
+		{
+			Node current = openList.Dequeue();
+			gathered.Add(current);
+
+			foreach (var item in current.connections)
+			{
+				Node other = item.Value;
+
+				if (!IsFlagged(other))
+				{
+					openList.Enqueue(other);
+					MarkAsFlagged(other);
+				}
+			}
+		}
+
+		return gathered;
+	}
+
+	public void Delete(NodeList group)
+	{
+		foreach (var item in group)
+		{
+			Delete(item);
+		}
+	}
+
 	public void Delete(Node node)
 	{
 		if (node == null)
@@ -106,6 +171,10 @@ public class NodeGrid : IEnumerable<Node> {
 		}
 	}
 
+	// ================================================================================
+	//  boolean flags for traversing the grid and remembering nodes
+	// --------------------------------------------------------------------------------
+
 	public void ClearFlags()
 	{
 		for (int row = 0; row < height; row++)
@@ -115,6 +184,16 @@ public class NodeGrid : IEnumerable<Node> {
 				_flagged[row, column] = false;
 			}
 		}
+	}
+
+	private void MarkAsFlagged(Node node)
+	{
+		_flagged[node.row, node.column] = true;
+	}
+
+	private bool IsFlagged(Node node)
+	{
+		return _flagged[node.row, node.column];
 	}
 
 	// ================================================================================
