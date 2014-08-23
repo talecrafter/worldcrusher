@@ -922,6 +922,8 @@ GameObject:
   - 114: {fileID: 1575866286}
   - 114: {fileID: 1575866289}
   - 114: {fileID: 1575866288}
+  - 114: {fileID: 1575866291}
+  - 114: {fileID: 1575866290}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -940,6 +942,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7130a7450959134fa1e331882a74e42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interfaceManager: {fileID: 0}
   inputController: {fileID: 0}
   playerController: {fileID: 0}
 --- !u!4 &1575866287
@@ -976,6 +979,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8726955d60fb0204b8214b309d45a075, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1575866290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1575866285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddd969dc76e929f4aaccd132db0bda64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1575866291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1575866285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad2cce7093fab974496234a6c33d1924, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionIcon: {fileID: 2800000, guid: fbfb0381bd1996044b0b6e279ea59bfc, type: 3}
+  margin: 20
 --- !u!1 &1609132409
 GameObject:
   m_ObjectHideFlags: 0

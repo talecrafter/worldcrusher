@@ -72,7 +72,7 @@ public class WorldGenerator : MonoBehaviour {
 		NodeList nodes = Game.Instance.world.nodes.GetConnectedNodes(Game.Instance.world.home, null, maxStartNodes);
 		foreach (var item in nodes)
 		{
-			item.SetFaction(Faction.Player);
+			item.SetFaction(FactionType.Player);
 		}
 	}
 

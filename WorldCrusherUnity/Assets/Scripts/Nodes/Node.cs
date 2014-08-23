@@ -19,7 +19,7 @@ public class Node {
 
 	public float x, y; // world position
 
-	public Faction faction = Faction.Enemy;
+	public FactionType faction = FactionType.Enemy;
 
 	private Dictionary<Direction, Node> _connections = new Dictionary<Direction, Node>();
 	public Dictionary<Direction, Node> connections
@@ -74,7 +74,7 @@ public class Node {
 	//  public methods
 	// --------------------------------------------------------------------------------
 
-	public void SetFaction(Faction faction)
+	public void SetFaction(FactionType faction)
 	{
 		this.faction = faction;
 

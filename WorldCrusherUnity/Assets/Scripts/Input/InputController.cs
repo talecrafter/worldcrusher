@@ -36,6 +36,20 @@ public class InputController : MonoBehaviour {
 
 	private void CheckInput()
 	{
+		CheckKeyboard();
+		CheckMouse();
+	}
+
+	private void CheckMouse()
+	{
+		if (Input.GetMouseButtonDown(0))
+		{
+
+		}
+	}
+
+	private void CheckKeyboard()
+	{
 		InputDirection current = GetDirectionFromInput();
 
 		if (current != _lastDirection && _target != null)
