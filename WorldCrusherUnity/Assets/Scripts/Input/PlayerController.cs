@@ -56,6 +56,18 @@ public class PlayerController : MonoBehaviour, INavigationInput {
 		_selectionFocus.transform.position = HoldInBounds(pos);
 	}
 
+	internal void TranslateCamera(Vector2 delta)
+	{
+		float d = Screen.height / (Camera.main.orthographicSize * 2.0f);
+		float y = delta.y / d;
+		float x = delta.x / d;
+
+		Vector3 newPos = _selectionFocus.transform.position;
+		newPos.x += x;
+		newPos.y += y;
+		MoveCamera(newPos);
+	}
+
 	private Vector3 HoldInBounds(Vector3 pos)
 	{
 		if (pos.x > Game.Instance.world.maxCameraX)

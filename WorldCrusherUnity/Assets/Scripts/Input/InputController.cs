@@ -8,10 +8,25 @@ public class InputController : MonoBehaviour {
 	public InputType inputType = InputType.Mouse;
 
 	const float treshold = 0.2f;
+	private float minimumTouchMovement = 14.0f;
+	private float minimumTime = 0.15f;
 
 	private InputDirection _lastDirection = InputDirection.None;
 
 	private INavigationInput _target = null;
+
+	private NodeDisplay _nodeUnderCursor;
+	private bool _isPanning = false;
+	public bool isPanning
+	{
+		get
+		{
+			return _isPanning;
+		}
+	}
+
+	private float _timeAtCommandStart = 0;
+	private Vector2 _startMousePoint;
 
 	// ================================================================================
 	//  unity methods
@@ -93,6 +108,11 @@ public class InputController : MonoBehaviour {
 
 	private void ProcessMouseInput()
 	{
+		if (_isPanning)
+		{
+			UpdatePanning();
+		}
+
 		if (Game.Instance.interfaceManager.mouseOnInterface)
 			return;
 
@@ -103,10 +123,44 @@ public class InputController : MonoBehaviour {
 		if (hit != null)
 			nodeUnderCursor = hit.GetComponent<NodeDisplay>();
 
+		// simple navigation
+
+		//if ((Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(2)))
+		//	Game.Instance.playerController.MoveCamera(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+
 		// left mouse button: move camera
 		if (Input.GetMouseButtonDown(0))
 		{
-			Game.Instance.playerController.MoveCamera(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+			if (nodeUnderCursor == null)
+				StartPanning(true);
+			else
+				StartCommand(nodeUnderCursor);
+		}
+
+		if (!_isPanning && Input.GetMouseButton(0))
+		{
+			if (Vector2.Distance(Input.mousePosition, _startMousePoint) > minimumTouchMovement
+				&& Time.time > _timeAtCommandStart + minimumTime)
+			{
+				StartPanning(false);
+			}
+        }
+
+		//else if (Vector2.Distance(Input.mousePosition, _startMousePoint) > _minimumTouchMovement // has moved
+		//			&& Time.time > _startTime + _minimumTime // after short moment
+		//			&& (!Game.Instance.applicationInfo.useTwoMouseButtons || !_canSelectMultiple))   // single input or cannot select multiple units
+
+		if (Input.GetMouseButton(0) == false)
+		{
+			if (_isPanning)
+			{
+				EndPanning();
+			}
+			else if (_nodeUnderCursor != null)
+			{
+				Game.Instance.playerController.Use(_nodeUnderCursor.node);
+				EndCommand();
+			}
 		}
 
 		// right mouse button: place or remove marker
@@ -115,6 +169,37 @@ public class InputController : MonoBehaviour {
 			Game.Instance.playerController.Use(nodeUnderCursor.node);
 		}
 	}
+
+	private void StartCommand(NodeDisplay node)
+	{
+		_timeAtCommandStart = Time.time;
+		_nodeUnderCursor = node;
+		_startMousePoint = Input.mousePosition;
+	}
+
+	private void EndCommand()
+	{
+		_nodeUnderCursor = null;
+    }
+
+	private void StartPanning(bool savePosition)
+	{
+		_startMousePoint = Input.mousePosition;
+		_isPanning = true;
+	}
+
+	private void UpdatePanning()
+	{
+		Vector2 delta = _startMousePoint - new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+		Game.Instance.playerController.TranslateCamera(delta);
+		_startMousePoint = Input.mousePosition;
+	}
+
+	private void EndPanning()
+	{
+		EndCommand();
+		_isPanning = false;
+    }
 
 	private bool HasKeyboardInput()
 	{

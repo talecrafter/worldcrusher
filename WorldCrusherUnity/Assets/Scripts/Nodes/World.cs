@@ -5,8 +5,8 @@ using System;
 
 public class World {
 
-	public float maxCameraX = 12.0f;
-	public float maxCameraY = 12.0f;
+	public float maxCameraX = 15.0f;
+	public float maxCameraY = 15.0f;
 
 	public NodeGroup nodes = new NodeGroup();
 
