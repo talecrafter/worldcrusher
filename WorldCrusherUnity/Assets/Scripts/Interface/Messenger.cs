@@ -35,7 +35,7 @@ public class Messenger : MonoBehaviour {
 
 	public void OnGUI()
 	{
-		if (Game.Instance.IsRunning && !Game.Instance.interfaceManager.showHelp)
+		if (!Game.Instance.interfaceManager.showHelp)
 			DisplayMessages();
 	}
 
@@ -45,6 +45,15 @@ public class Messenger : MonoBehaviour {
 
 		for (int i = 0; i < _messages.Count; i++)
 		{
+			if (i == _messages.Count - 1)
+			{
+				GUI.color = Color.white;
+			}
+			else
+			{
+				GUI.color = new Color(1.0f, 1.0f, 1.0f, 0.3f);
+			}
+
 			float y = Screen.height - margin - height - i * (height + offset);
 			Rect rect = new Rect(margin, y, width, height);
 			GUI.Label(rect, _messages[i], style);

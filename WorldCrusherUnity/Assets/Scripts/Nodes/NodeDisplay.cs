@@ -13,6 +13,19 @@ public class NodeDisplay : MonoBehaviour {
 
 	private Dictionary<Node, NodeConnection> _connections = new Dictionary<Node, NodeConnection>();
 
+	// ================================================================================
+	//  unity methods
+	// --------------------------------------------------------------------------------
+
+	public void Awake()
+	{
+		HideMarker();
+    }
+
+	// ================================================================================
+	//  public methods
+	// --------------------------------------------------------------------------------
+
 	public void SetNode(Node node)
 	{
 		this.node = node;
@@ -29,8 +42,7 @@ public class NodeDisplay : MonoBehaviour {
 	public void NewRound()
 	{
 		UpdateFaction();
-		defenseImage.enabled = false;
-		attackImage.enabled = false;
+		HideMarker();
 	}
 
 	public void ShowAttack()
@@ -55,6 +67,12 @@ public class NodeDisplay : MonoBehaviour {
 		defenseImage.enabled = false;
 	}
 
+	public void HideMarker()
+	{
+		HideAttack();
+		HideDefense();
+	}
+
 	public void UpdateFaction()
 	{
 		if (node.faction == FactionType.Player)
@@ -74,6 +92,10 @@ public class NodeDisplay : MonoBehaviour {
 		}
 	}
 
+	// ================================================================================
+	//  connections
+	// --------------------------------------------------------------------------------
+
 	public bool HasConnection(Node otherNode)
 	{
 		return _connections.ContainsKey(otherNode);
@@ -82,11 +104,5 @@ public class NodeDisplay : MonoBehaviour {
 	public void AttachConnection(Node otherNode, NodeConnection connection)
 	{
 		_connections.Add(otherNode, connection);
-	}
-
-	public void HideMarker()
-	{
-		HideAttack();
-		HideDefense();
 	}
 }

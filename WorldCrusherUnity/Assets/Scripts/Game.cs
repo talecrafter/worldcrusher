@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class Game : MonoBehaviour {
 
@@ -68,7 +69,7 @@ public class Game : MonoBehaviour {
 	{
 		messenger.Clear();
 
-		WorldGenerator generator = Object.FindObjectOfType<WorldGenerator>();
+		WorldGenerator generator = FindObjectOfType<WorldGenerator>();
 		generator.ResetWorld();
 
 		player.NewRound();
@@ -92,10 +93,12 @@ public class Game : MonoBehaviour {
 
 		// show result of all attacks
 		endOfTurnSolver.GatherActions();
-		foreach (var attack in endOfTurnSolver.attacks)
+		endOfTurnSolver.HideMarkerAtDefendedNodes();
+
+        foreach (var attack in endOfTurnSolver.attacks)
 		{
 			playerController.Select(attack.node);
-			yield return new WaitForSeconds(0.5f);
+			yield return new WaitForSeconds(0.35f);
 			if (attack.isDefended)
 			{
 				attack.node.Defended();
@@ -104,18 +107,46 @@ public class Game : MonoBehaviour {
 			{
 				attack.node.Conquered();
 			}
-			yield return new WaitForSeconds(0.5f);
+			yield return new WaitForSeconds(0.35f);
 		}
 
-		// calculate islands and give small islands to other faction
+		world.HideMarker();
 
+		// calculate islands and give small islands to other faction
+		world.nodes.LooseUnconnectedWorlds();
+		world.nodes.LooseUnconnectedWorlds();
 		yield return new WaitForSeconds(0.5f);
 
 		// examine winning conditions
+		if (player.HasLost())
+		{
+			messenger.Message("You have lost too many worlds");
+			yield return new WaitForSeconds(2.0f);
+			GameOver();
+			yield break;
+		}
+
+		if (player.HasLost())
+		{
+			messenger.Message("You have defeated the enemy");
+			yield return new WaitForSeconds(2.0f);
+			GameWon();
+			yield break;
+		}
 
 		// start new round
 		world.NewRound();
 		_state = GameState.Running;
 		playerController.ShowSelection(true);
+	}
+
+	private void GameWon()
+	{
+		Application.LoadLevel(2);
+	}
+
+	private void GameOver()
+	{
+		Application.LoadLevel(3);
 	}
 }

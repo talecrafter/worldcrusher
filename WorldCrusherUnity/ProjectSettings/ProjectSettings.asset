@@ -11,7 +11,7 @@ PlayerSettings:
   targetResolution: 0
   accelerometerFrequency: 60
   companyName: crafting legends
-  productName: World Crusher 3000
+  productName: Galaxy Conquest 3000
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   defaultScreenWidth: 1024
@@ -107,7 +107,7 @@ PlayerSettings:
     - m_Icon: {fileID: 0}
       m_Size: 128
   m_BuildTargetBatching: []
-  webPlayerTemplate: APPLICATION:Black Background
+  webPlayerTemplate: APPLICATION:No Context Menu
   m_TemplateCustomTags: {}
   XboxTitleId: 
   XboxImageXexPath: 

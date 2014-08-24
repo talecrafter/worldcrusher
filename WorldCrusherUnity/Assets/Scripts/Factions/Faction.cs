@@ -30,6 +30,16 @@ public class Faction {
 		defenses.Clear();
 	}
 
+	public int GetNodeCount()
+	{
+		return Game.Instance.world.nodes.GetNodeCount(type);
+	}
+
+	public bool HasLost()
+	{
+		return GetNodeCount() <= actions;
+	}
+
 	public void PrepareAttack(Node node)
 	{
 		if (actionsLeft > 0)

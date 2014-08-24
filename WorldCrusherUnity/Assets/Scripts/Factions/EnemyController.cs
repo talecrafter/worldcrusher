@@ -18,7 +18,9 @@ public class EnemyController : MonoBehaviour {
 		NodeGroup ownBorder = _world.GetBorderRegions(FactionType.Enemy);
 		NodeGroup foreignBorder = _world.GetBorderRegions(FactionType.Player);
 
-		while (_faction.actionsLeft > 0)
+		int maxPossibleActions = ownBorder.Count + foreignBorder.Count;
+
+		while (_faction.actionsLeft > 0 && (ownBorder.Count + foreignBorder.Count > 1))
 		{
 			if (ownBorder.Count == 0 && foreignBorder.Count == 0)
 				break;

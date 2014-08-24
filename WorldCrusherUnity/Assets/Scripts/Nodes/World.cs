@@ -56,4 +56,12 @@ public class World {
 		Game.Instance.player.NewRound();
 		Game.Instance.enemy.NewRound();
 	}
+
+	public void HideMarker()
+	{
+		foreach (var node in nodes)
+		{
+			node.display.HideMarker();
+		}
+	}
 }

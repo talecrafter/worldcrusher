@@ -97,6 +97,11 @@ public class Node {
 
 		if (display != null)
 			display.UpdateFaction();
+
+		foreach (var node in _connections)
+		{
+			node.Value.display.UpdateFaction();
+		}
 	}
 
 	public void Connect(Node other, Direction direction)
@@ -125,7 +130,7 @@ public class Node {
 
 	public void Conquered()
 	{
-		faction = faction.Other();
+		SetFaction(faction.Other());
 		display.UpdateFaction();
 		display.HideMarker();
 	}

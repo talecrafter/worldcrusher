@@ -66,6 +66,8 @@ public class WorldGenerator : MonoBehaviour {
 		{
 			item.SetFaction(FactionType.Player);
 		}
+
+		Game.Instance.world.nodes.LooseUnconnectedWorlds();
 	}
 
 	private void DeleteCorners(NodeGrid grid)

@@ -44,9 +44,9 @@ public class HelpDisplay : MonoBehaviour {
 	void DrawGameDescription()
 	{
 		string message = "Navigate with keyboard or click on worlds" + "\n"
-			+ "\n"
+			//+ "\n"
 			+ "Place attacks and defenses" + "\n";
-		Rect rect = new Rect(Screen.width * 0.5f - width * 0.5f, Screen.height * 0.5f - height * 0.5f, width, height);
+		Rect rect = new Rect(Screen.width * 0.5f - width * 0.5f, Screen.height * 0.6f, width, height);
 		GUI.Label(rect, message, GUI.skin.customStyles[4]);
 	}
 

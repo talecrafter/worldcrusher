@@ -13,6 +13,14 @@ public static class ListExtensions
 		return source[i];
 	}
 
+	public static T Last<T>(this List<T> source)
+	{
+		if (source.Count == 0)
+			return default(T);
+
+		return source[source.Count - 1];
+	}
+
 	public static List<T> Shuffle<T>(this List<T> list)
 	{
 		List<T> shuffledList = new List<T>(0);
