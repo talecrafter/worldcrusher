@@ -26,7 +26,7 @@ public class WorldGenerator : MonoBehaviour {
 
 	private GameObject _worldObject = null;
 
-    void Awake() {
+    void Start() {
 		ResetWorld();
     }
 

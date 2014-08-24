@@ -131,6 +131,16 @@ public class Node {
 	public void Conquered()
 	{
 		SetFaction(faction.Other());
+
+		if (faction == FactionType.Player)
+		{
+			Game.Instance.audioController.PlanetConquered();
+		}
+		else
+		{
+			Game.Instance.audioController.PlanetLost();
+		}
+
 		display.UpdateFaction();
 		display.HideMarker();
 	}

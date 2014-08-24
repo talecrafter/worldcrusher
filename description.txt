@@ -1,0 +1,8 @@
+Galaxy Conquest 3000
+
+Conquer all Galaxies.
+Navigate with Keyboard, Mouse or Gamepad.
+Place your three actions as attacks or defenses. The computer does the same, not visible to you.
+End the turn and the result of the actions will be determined.
+Defense actions are always successfull against attack actions. Attack actions on undefended worlds are also always successfull.
+The player with three or less worlds looses.

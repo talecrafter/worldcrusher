@@ -1035,6 +1035,8 @@ GameObject:
   - 114: {fileID: 1575866293}
   - 114: {fileID: 1575866294}
   - 114: {fileID: 1575866295}
+  - 114: {fileID: 1575866297}
+  - 82: {fileID: 1575866296}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -1056,6 +1058,7 @@ MonoBehaviour:
   interfaceManager: {fileID: 0}
   messenger: {fileID: 0}
   inputController: {fileID: 0}
+  audioController: {fileID: 0}
   playerController: {fileID: 0}
   enemyController: {fileID: 0}
 --- !u!4 &1575866287
@@ -1231,6 +1234,82 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84a4114b6725a4842b674174c230a65a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!82 &1575866296
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1575866285}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+--- !u!114 &1575866297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1575866285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da80997e32fdf364799df17dd18e5abc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  placementSound: {fileID: 8300000, guid: 13564f0de9102c54ca285b50f54b49d1, type: 3}
+  movementSound: {fileID: 8300000, guid: 1ad1e088dec28b64daffde87030c534a, type: 3}
+  executeSound: {fileID: 8300000, guid: 92ba61ed9251793419c4dc20cee346c4, type: 3}
+  planetConquered:
+  - {fileID: 8300000, guid: 0c9ab00f2d9651d4fa06bfb132a7713d, type: 3}
+  planetLost:
+  - {fileID: 8300000, guid: 5c15562d8e81dd045b167d45de4adcf7, type: 3}
 --- !u!1001 &1599601912
 Prefab:
   m_ObjectHideFlags: 0

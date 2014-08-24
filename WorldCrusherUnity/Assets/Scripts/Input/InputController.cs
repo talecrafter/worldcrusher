@@ -26,6 +26,11 @@ public class InputController : MonoBehaviour {
 		{
 			CheckInput();
 		}
+
+		if (!Application.isWebPlayer && Input.GetKeyDown(KeyCode.Escape) )
+		{
+			Application.Quit();
+		}
 	}
 
 	public void OnLevelWasLoaded(int levelIndex)

@@ -12,6 +12,7 @@ public class Game : MonoBehaviour {
 	public InterfaceManager interfaceManager = null;
 	public Messenger messenger = null;
 	public InputController inputController = null;
+	public AudioController audioController = null;
 
 	// gameplay
 	public World world = new World();
@@ -49,6 +50,7 @@ public class Game : MonoBehaviour {
 
 		Instance = this;
 
+		audioController = GetComponent<AudioController>();
 		interfaceManager = GetComponent<InterfaceManager>();
 		messenger = GetComponent<Messenger>();
 		inputController = GetComponent<InputController>();
@@ -62,6 +64,8 @@ public class Game : MonoBehaviour {
 
 	public void EndTurn()
 	{
+		audioController.ExecuteSound();
+
 		StartCoroutine(HandleEndTurn());
 	}
 
@@ -126,7 +130,7 @@ public class Game : MonoBehaviour {
 			yield break;
 		}
 
-		if (player.HasLost())
+		if (enemy.HasLost())
 		{
 			messenger.Message("You have defeated the enemy");
 			yield return new WaitForSeconds(2.0f);

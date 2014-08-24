@@ -39,6 +39,8 @@ public class PlayerController : MonoBehaviour, INavigationInput {
 
 	public void Select(Node node)
 	{
+		Game.Instance.audioController.MovementSound();
+
 		_selected = node;
 		_selectionFocus.Select(node);
 	}
@@ -50,6 +52,8 @@ public class PlayerController : MonoBehaviour, INavigationInput {
 
 	public void Use(Node node)
 	{
+		Game.Instance.audioController.PlacementSound();
+
 		if (node.faction == _faction.type)
 		{
 			if (_faction.defenses.Contains(node))
