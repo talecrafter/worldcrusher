@@ -5,6 +5,8 @@ using System;
 
 public class InputController : MonoBehaviour {
 
+	public InputType inputType = InputType.Mouse;
+
 	const float treshold = 0.2f;
 
 	private InputDirection _lastDirection = InputDirection.None;
@@ -49,18 +51,33 @@ public class InputController : MonoBehaviour {
 
 	private void CheckInput()
 	{
-		CheckKeyboard();
-		CheckMouse();
+		if (HasMouseInput() && inputType == InputType.KeyboardOrGamepad)
+		{
+			inputType = InputType.Mouse;
+		}
+		else if (HasKeyboardInput() && inputType == InputType.Mouse)
+		{
+			inputType = InputType.KeyboardOrGamepad;
+			Game.Instance.playerController.MoveCameraBackToNode();
+        }
+
+		switch (inputType)
+		{
+			case InputType.KeyboardOrGamepad:
+				ProcessKeyboardInput();
+				break;
+			case InputType.Mouse:
+				ProcessMouseInput();
+				break;
+			case InputType.Touch:
+				break;
+			default:
+				break;
+		}
 
 		if (Input.GetKeyDown(KeyCode.R))
 		{
 			Game.Instance.Restart();
-		}
-
-		// activate focused node
-		if (Input.GetButtonDown("Use"))
-		{
-			Game.Instance.playerController.Use();
 		}
 
 		if (Input.GetButtonDown("EndTurn"))
@@ -69,32 +86,44 @@ public class InputController : MonoBehaviour {
 		}
 	}
 
-	private static void CheckMouse()
+	private bool HasMouseInput()
+	{
+		return Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1);
+	}
+
+	private void ProcessMouseInput()
 	{
 		if (Game.Instance.interfaceManager.mouseOnInterface)
 			return;
 
-		Transform hit = Utilities2D.GetHitFromPointer();
+		// find node under cursor
+		NodeDisplay nodeUnderCursor = null;
+        Transform hit = Utilities2D.GetHitFromPointer();
 
-		if (hit == null)
-			return;
+		if (hit != null)
+			nodeUnderCursor = hit.GetComponent<NodeDisplay>();
 
-		NodeDisplay selection = hit.GetComponent<NodeDisplay>();
-
-		// left mouse button: selection, focus
-		if (Input.GetMouseButtonDown(0) && selection != null)
+		// left mouse button: move camera
+		if (Input.GetMouseButtonDown(0))
 		{
-			Game.Instance.playerController.Select(selection.node);
+			Game.Instance.playerController.MoveCamera(Camera.main.ScreenToWorldPoint(Input.mousePosition));
 		}
 
 		// right mouse button: place or remove marker
-		if (Input.GetMouseButtonDown(1) && selection != null)
+		if (Input.GetMouseButtonDown(1) && nodeUnderCursor != null)
 		{
-			Game.Instance.playerController.Use(selection.node);
+			Game.Instance.playerController.Use(nodeUnderCursor.node);
 		}
 	}
 
-	private void CheckKeyboard()
+	private bool HasKeyboardInput()
+	{
+		InputDirection inputDirection = GetDirectionFromInput();
+
+		return inputDirection != InputDirection.None || Input.GetButtonDown("Use");
+    }
+
+	private void ProcessKeyboardInput()
 	{
 		InputDirection current = GetDirectionFromInput();
 
@@ -122,6 +151,12 @@ public class InputController : MonoBehaviour {
 		}
 
 		_lastDirection = current;
+
+		// activate focused node
+		if (Input.GetButtonDown("Use"))
+		{
+			Game.Instance.playerController.Use();
+		}
 	}
 
 	private InputDirection GetDirectionFromInput()

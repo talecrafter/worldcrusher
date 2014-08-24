@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class PlayerController : MonoBehaviour, INavigationInput {
 
@@ -43,6 +44,30 @@ public class PlayerController : MonoBehaviour, INavigationInput {
 
 		_selected = node;
 		_selectionFocus.Select(node);
+	}
+
+	public void MoveCameraBackToNode()
+	{
+		Select(Game.Instance.world.FindRandomPlayerNode());
+	}
+
+	public void MoveCamera(Vector3 pos)
+	{		
+		_selectionFocus.transform.position = HoldInBounds(pos);
+	}
+
+	private Vector3 HoldInBounds(Vector3 pos)
+	{
+		if (pos.x > Game.Instance.world.maxCameraX)
+			pos.x = Game.Instance.world.maxCameraX;
+		if (pos.x < -Game.Instance.world.maxCameraX)
+			pos.x = -Game.Instance.world.maxCameraX;
+		if (pos.y > Game.Instance.world.maxCameraY)
+			pos.y = Game.Instance.world.maxCameraY;
+		if (pos.y < -Game.Instance.world.maxCameraY)
+			pos.y = -Game.Instance.world.maxCameraY;
+
+		return pos;
 	}
 
 	public void Use()

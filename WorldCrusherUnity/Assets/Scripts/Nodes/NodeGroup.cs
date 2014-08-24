@@ -41,6 +41,19 @@ public class NodeGroup : IEnumerable<Node> {
 		return count;
 	}
 
+	public NodeList GetNodesForFaction(FactionType type)
+	{
+		NodeList list = new NodeList();
+
+		foreach (var node in _nodes)
+		{
+			if (node.faction == type)
+				list.Add(node);
+		}
+
+		return list;
+	}
+
 	public Node PopRandom()
 	{
 		Node node = new NodeList(_nodes).PickRandom();

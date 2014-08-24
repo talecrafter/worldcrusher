@@ -30,7 +30,7 @@ public class EndTurnButton : MonoBehaviour {
 		if (Game.Instance.interfaceManager.showHelp)
 		{
 			Rect bottomRect = new Rect(margin, rect.y + height + offset, width, height);
-			GUI.Label(bottomRect, "E, Return", GUI.skin.customStyles[0]);
+			GUI.Label(bottomRect, "'Space'", GUI.skin.customStyles[0]);
 		}
 	}
 

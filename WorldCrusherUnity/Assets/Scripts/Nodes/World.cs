@@ -5,6 +5,9 @@ using System;
 
 public class World {
 
+	public float maxCameraX = 12.0f;
+	public float maxCameraY = 12.0f;
+
 	public NodeGroup nodes = new NodeGroup();
 
 	private Node _home;
@@ -41,6 +44,11 @@ public class World {
 	public void PickStartNode()
 	{
 		_home = nodes.PickRandom();
+	}
+
+	public Node FindRandomPlayerNode()
+	{
+		return nodes.GetNodesForFaction(FactionType.Player).PickRandom();
 	}
 
 	public void NewRound()

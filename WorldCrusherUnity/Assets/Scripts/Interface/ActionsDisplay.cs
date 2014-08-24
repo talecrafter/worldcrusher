@@ -42,7 +42,7 @@ public class ActionsDisplay : MonoBehaviour {
 		{
 			GUI.color = Color.white;
 			Rect bottomRect = new Rect(Screen.width - 200.0f - margin, margin + actionIcon.height + offset, 200.0f, 50.0f);
-			GUI.Label(bottomRect, "Place with Space or Right Mouse Button", GUI.skin.customStyles[1]);
+			GUI.Label(bottomRect, "Place with 'E', 'Return' or Right Mouse Click", GUI.skin.customStyles[1]);
 		}
 	}
 }

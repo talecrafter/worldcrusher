@@ -36,14 +36,14 @@ public class HelpDisplay : MonoBehaviour {
 
 		Rect bottomRect = new Rect(margin, Screen.height - margin - 50.0f, 300.0f, 50.0f);
 
-		string message = "R: Restart with new world";
+		string message = "'R' Restart with new world";
 
 		GUI.Label(bottomRect, message, GUI.skin.customStyles[3]);
 	}
 
 	void DrawGameDescription()
 	{
-		string message = "Navigate with keyboard or click on worlds" + "\n"
+		string message = "Navigate with mouse, keyboard or gamepad" + "\n"
 			//+ "\n"
 			+ "Place attacks and defenses" + "\n";
 		Rect rect = new Rect(Screen.width * 0.5f - width * 0.5f, Screen.height * 0.6f, width, height);
@@ -56,9 +56,9 @@ public class HelpDisplay : MonoBehaviour {
 
 		Rect bottomRect = new Rect(Screen.width - margin - 300.0f, Screen.height - margin - 50.0f, 300.0f, 50.0f);
 
-		string message = "F1: Show Controls";
+		string message = "'F1' Show Controls";
 		if (Game.Instance.interfaceManager.showHelp)
-			message = "F1: Hide Controls";
+			message = "'F1' Hide Controls";
 
 		GUI.Label(bottomRect, message, GUI.skin.customStyles[2]);
 	}
