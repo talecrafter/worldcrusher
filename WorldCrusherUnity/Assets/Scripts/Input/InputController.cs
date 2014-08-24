@@ -125,43 +125,39 @@ public class InputController : MonoBehaviour {
 
 		// simple navigation
 
-		//if ((Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(2)))
-		//	Game.Instance.playerController.MoveCamera(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+		if ((Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(2)))
+			Game.Instance.playerController.MoveCamera(Camera.main.ScreenToWorldPoint(Input.mousePosition));
 
-		// left mouse button: move camera
-		if (Input.GetMouseButtonDown(0))
-		{
-			if (nodeUnderCursor == null)
-				StartPanning(true);
-			else
-				StartCommand(nodeUnderCursor);
-		}
+		//// left mouse button: move camera
+		//if (Input.GetMouseButtonDown(0))
+		//{
+		//	if (nodeUnderCursor == null)
+		//		StartPanning(true);
+		//	else
+		//		StartCommand(nodeUnderCursor);
+		//}
 
-		if (!_isPanning && Input.GetMouseButton(0))
-		{
-			if (Vector2.Distance(Input.mousePosition, _startMousePoint) > minimumTouchMovement
-				&& Time.time > _timeAtCommandStart + minimumTime)
-			{
-				StartPanning(false);
-			}
-        }
+		//if (!_isPanning && Input.GetMouseButton(0))
+		//{
+		//	if (Vector2.Distance(Input.mousePosition, _startMousePoint) > minimumTouchMovement
+		//		&& Time.time > _timeAtCommandStart + minimumTime)
+		//	{
+		//		StartPanning(false);
+		//	}
+		//      }
 
-		//else if (Vector2.Distance(Input.mousePosition, _startMousePoint) > _minimumTouchMovement // has moved
-		//			&& Time.time > _startTime + _minimumTime // after short moment
-		//			&& (!Game.Instance.applicationInfo.useTwoMouseButtons || !_canSelectMultiple))   // single input or cannot select multiple units
-
-		if (Input.GetMouseButton(0) == false)
-		{
-			if (_isPanning)
-			{
-				EndPanning();
-			}
-			else if (_nodeUnderCursor != null)
-			{
-				Game.Instance.playerController.Use(_nodeUnderCursor.node);
-				EndCommand();
-			}
-		}
+		//if (Input.GetMouseButton(0) == false)
+		//{
+		//	if (_isPanning)
+		//	{
+		//		EndPanning();
+		//	}
+		//	else if (_nodeUnderCursor != null)
+		//	{
+		//		Game.Instance.playerController.Use(_nodeUnderCursor.node);
+		//		EndCommand();
+		//	}
+		//}
 
 		// right mouse button: place or remove marker
 		if (Input.GetMouseButtonDown(1) && nodeUnderCursor != null)
