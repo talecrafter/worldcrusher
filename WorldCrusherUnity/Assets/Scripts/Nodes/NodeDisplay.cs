@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class NodeDisplay : MonoBehaviour {
 
 	public Node node = null;
 
 	public SpriteRenderer mainImage;
+	public SpriteRenderer defenseImage;
+	public SpriteRenderer attackImage;
 
 	private Dictionary<Node, NodeConnection> _connections = new Dictionary<Node, NodeConnection>();
 
@@ -23,9 +26,52 @@ public class NodeDisplay : MonoBehaviour {
 		mainImage.sprite = image;
 	}
 
+	public void NewRound()
+	{
+		UpdateFaction();
+		defenseImage.enabled = false;
+		attackImage.enabled = false;
+	}
+
+	public void ShowAttack()
+	{
+		attackImage.enabled = true;
+		attackImage.color = node.faction.Other().GetColor();
+	}
+
+	public void HideAttack()
+	{
+		attackImage.enabled = false;
+	}
+
+	public void ShowDefense()
+	{
+		defenseImage.enabled = true;
+		defenseImage.color = node.faction.GetColor();
+	}
+
+	public void HideDefense()
+	{
+		defenseImage.enabled = false;
+	}
+
 	public void UpdateFaction()
 	{
-		mainImage.color = node.faction.GetColor();
+		if (node.faction == FactionType.Player)
+		{
+			mainImage.color = Color.white;
+		}
+		else
+		{
+			if (node.isBorderNode)
+			{
+				mainImage.color = new Color(0.3f, 0.3f, 0.3f);
+			}
+			else
+			{
+				mainImage.color = new Color(0.2f, 0.05f, 0.05f);
+			}
+		}
 	}
 
 	public bool HasConnection(Node otherNode)
@@ -38,4 +84,9 @@ public class NodeDisplay : MonoBehaviour {
 		_connections.Add(otherNode, connection);
 	}
 
+	public void HideMarker()
+	{
+		HideAttack();
+		HideDefense();
+	}
 }

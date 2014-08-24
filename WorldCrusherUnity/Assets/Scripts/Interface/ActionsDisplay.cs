@@ -15,6 +15,8 @@ public class ActionsDisplay : MonoBehaviour {
 
 	private void DrawActions()
 	{
+		GUI.skin = Game.Instance.interfaceManager.skin;
+
 		int actionsMax = Game.Instance.player.actions;
 		int actionsLeft = Game.Instance.player.actionsLeft;
 
@@ -23,15 +25,24 @@ public class ActionsDisplay : MonoBehaviour {
 
 		Texture2D actionIcon = Game.Instance.interfaceManager.actionIcon;
 
+		Color playerColor = Game.Instance.interfaceManager.playerColor;
+
 		for (int i = 0; i < actionsMax; i++)
 		{
 			if (i < actionsLeft)
-				GUI.color = Color.white;
+				GUI.color = playerColor;
 			else
-				GUI.color = new Color(1.0f, 1.0f, 1.0f, 0.3f);
+				GUI.color = new Color(playerColor.r, playerColor.g, playerColor.b, 0.2f);
 
 			Rect rect = new Rect(Screen.width - i * (actionIcon.width + offset) - margin - actionIcon.width, margin, actionIcon.width, actionIcon.height);
 			GUI.DrawTexture(rect, actionIcon);
+		}
+
+		if (Game.Instance.interfaceManager.showHelp)
+		{
+			GUI.color = Color.white;
+			Rect bottomRect = new Rect(Screen.width - 200.0f - margin, margin + actionIcon.height + offset, 200.0f, 50.0f);
+			GUI.Label(bottomRect, "Place with Space or Right Mouse Button", GUI.skin.customStyles[1]);
 		}
 	}
 }

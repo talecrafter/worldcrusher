@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 // ================================================================================
 //  Node Delegates
@@ -31,6 +32,22 @@ public class Node {
 	}
 
 	public NodeDisplay display;
+
+	public bool isBorderNode
+	{
+		get
+		{
+			foreach (var item in _connections)
+			{
+				if (item.Value.faction != faction)
+				{
+					return true;
+				}
+			}
+
+			return false;
+		}
+	}
 
 	// ================================================================================
 	//  position helper
@@ -106,6 +123,18 @@ public class Node {
 		_connections[direction] = other;
 	}
 
+	public void Conquered()
+	{
+		faction = faction.Other();
+		display.UpdateFaction();
+		display.HideMarker();
+	}
+
+	public void Defended()
+	{
+		display.HideMarker();
+	}
+
 	public void DetachIncomingConnection(Node other, Direction direction)
 	{
 		if (_connections.ContainsKey(direction))
@@ -127,9 +156,20 @@ public class Node {
 		return _connections.ContainsValue(node);
 	}
 
+	// ================================================================================
+	//  debug methods
+	// --------------------------------------------------------------------------------
+
 	public override string ToString()
 	{
 		return string.Format("Node {0}:{1}", column, row);
 	}
 
+	public void LogConnections()
+	{
+		foreach (var item in _connections)
+		{
+			Debug.Log(item.Value + " - " + item.Value.faction);
+		}
+	}
 }

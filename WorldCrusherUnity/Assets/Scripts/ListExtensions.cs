@@ -12,4 +12,19 @@ public static class ListExtensions
 		int i = Random.Range(0, source.Count);
 		return source[i];
 	}
+
+	public static List<T> Shuffle<T>(this List<T> list)
+	{
+		List<T> shuffledList = new List<T>(0);
+		int nListCount = list.Count;
+		int nElementIndex;
+		for (int i = 0; i < nListCount; i++)
+		{
+			nElementIndex = Random.Range(0, list.Count);
+			shuffledList.Add(list[nElementIndex]);
+			list.RemoveAt(nElementIndex);
+		}
+
+		return shuffledList;
+	}
 }

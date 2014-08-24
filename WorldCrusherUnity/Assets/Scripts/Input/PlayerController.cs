@@ -27,6 +27,11 @@ public class PlayerController : MonoBehaviour, INavigationInput {
 	//  public methods
 	// --------------------------------------------------------------------------------
 
+	public void ShowSelection(bool doShow)
+	{
+		_selectionFocus.gameObject.SetActive(doShow);
+    }
+
 	public void SetSelectionToHome()
 	{
 		Select(Game.Instance.world.home);
@@ -40,17 +45,22 @@ public class PlayerController : MonoBehaviour, INavigationInput {
 
 	public void Use()
 	{
-		if (_selected.faction == _faction.type)
+		Use(_selected);
+	}
+
+	public void Use(Node node)
+	{
+		if (node.faction == _faction.type)
 		{
-			if (_faction.defenses.Contains(_selected))
+			if (_faction.defenses.Contains(node))
 			{
-				_faction.RemoveDefense(_selected);
+				_faction.RemoveDefense(node);
 			}
-			else if (!_faction.defenses.Contains(_selected))
+			else if (!_faction.defenses.Contains(node))
 			{
 				if (_faction.actionsLeft > 0)
 				{
-					_faction.PrepareDefence(_selected);
+					_faction.PrepareDefense(node);
 				}
 				else
 				{
@@ -60,23 +70,28 @@ public class PlayerController : MonoBehaviour, INavigationInput {
 		}
 		else
 		{
-			if (_faction.attacks.Contains(_selected))
+			if (_faction.attacks.Contains(node))
 			{
-				_faction.RemoveAttack(_selected);
+				_faction.RemoveAttack(node);
 			}
-			else if (!_faction.attacks.Contains(_selected))
+			else if (!_faction.attacks.Contains(node))
 			{
-				if (_faction.actionsLeft > 0)
-				{
-					_faction.PrepareAttack(_selected);
-				}
-				else
+				if (_faction.actionsLeft == 0)
 				{
 					Game.Instance.messenger.Message("No Actions Left");
+				}
+				else if (!node.isBorderNode)
+				{
+					Game.Instance.messenger.Message("Not in Range");
+				}
+				else if (_faction.actionsLeft > 0)
+				{
+					_faction.PrepareAttack(node);
 				}
 			}
 		}
 	}
+
 
 	// ================================================================================
 	//  private methods

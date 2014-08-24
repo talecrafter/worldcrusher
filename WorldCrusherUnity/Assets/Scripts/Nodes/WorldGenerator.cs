@@ -136,6 +136,7 @@ public class WorldGenerator : MonoBehaviour {
 		DestroyWorld();
 		CreateWorld();
 		Game.Instance.playerController.SetSelectionToHome();
+		Game.Instance.world.NewRound();
 	}
 
 	private void DestroyWorld()
@@ -159,7 +160,7 @@ public class WorldGenerator : MonoBehaviour {
 
 			// variable size
 			float size = Random.Range(1.0f - sizeVariation, 1.0f + sizeVariation);
-			nodeDisplay.transform.localScale = new Vector3(size, size, size);
+			nodeDisplay.mainImage.transform.localScale = new Vector3(size, size, size);
 			nodeDisplay.SetImage(planetImages.PickRandom());
 
 			nodeDisplay.transform.parent = _worldObject.transform;

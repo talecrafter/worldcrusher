@@ -12,6 +12,8 @@ TextureImporter:
     21300014: planet1
     21300016: planet2
     21300018: planet3
+    21300020: defense
+    21300022: attack
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -142,6 +144,26 @@ TextureImporter:
         height: 238
       alignment: 0
       pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: defense
+      rect:
+        serializedVersion: 2
+        x: 1056
+        y: 1060
+        width: 398
+        height: 398
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: attack
+      rect:
+        serializedVersion: 2
+        x: 1524
+        y: 1006
+        width: 407
+        height: 488
+      alignment: 9
+      pivot: {x: .483478338, y: .469549477}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 

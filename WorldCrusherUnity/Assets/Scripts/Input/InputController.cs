@@ -11,6 +11,10 @@ public class InputController : MonoBehaviour {
 
 	private INavigationInput _target = null;
 
+	// ================================================================================
+	//  unity methods
+	// --------------------------------------------------------------------------------
+
 	public void Awake()
 	{
 		_target = GetComponent<PlayerController>();
@@ -29,6 +33,10 @@ public class InputController : MonoBehaviour {
 		Reset();
 	}
 
+	// ================================================================================
+	//  private methods
+	// --------------------------------------------------------------------------------
+
 	private void Reset()
 	{
 		_lastDirection = InputDirection.None;
@@ -43,31 +51,41 @@ public class InputController : MonoBehaviour {
 		{
 			Game.Instance.Restart();
 		}
-	}
-
-	private void CheckMouse()
-	{
-		// look for node under cursor
-		CheckMouseSelection();
 
 		// activate focused node
-		if (Input.GetMouseButtonDown(1) || Input.GetButtonDown("Use"))
+		if (Input.GetButtonDown("Use"))
 		{
 			Game.Instance.playerController.Use();
 		}
+
+		if (Input.GetButtonDown("EndTurn"))
+		{
+			Game.Instance.EndTurn();
+		}
 	}
 
-	private static void CheckMouseSelection()
-	{		
+	private static void CheckMouse()
+	{
+		if (Game.Instance.interfaceManager.mouseOnInterface)
+			return;
+
 		Transform hit = Utilities2D.GetHitFromPointer();
 
 		if (hit == null)
 			return;
 
 		NodeDisplay selection = hit.GetComponent<NodeDisplay>();
+
+		// left mouse button: selection, focus
 		if (Input.GetMouseButtonDown(0) && selection != null)
 		{
 			Game.Instance.playerController.Select(selection.node);
+		}
+
+		// right mouse button: place or remove marker
+		if (Input.GetMouseButtonDown(1) && selection != null)
+		{
+			Game.Instance.playerController.Use(selection.node);
 		}
 	}
 

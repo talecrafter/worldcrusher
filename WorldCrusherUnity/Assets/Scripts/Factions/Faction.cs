@@ -35,20 +35,25 @@ public class Faction {
 		if (actionsLeft > 0)
 		{
 			attacks.Add(node);
+			node.display.ShowAttack();
 		}
 	}
 
 	public void RemoveAttack(Node node)
 	{
 		if (attacks.Contains(node))
+		{
 			attacks.Remove(node);
+			node.display.HideAttack();
+		}
 	}
 
-	public void PrepareDefence(Node node)
+	public void PrepareDefense(Node node)
 	{
 		if (actionsLeft > 0)
 		{
 			defenses.Add(node);
+			node.display.ShowDefense();
 		}
 	}
 
@@ -57,6 +62,7 @@ public class Faction {
 		if (defenses.Contains(node))
 		{
 			defenses.Remove(node);
+			node.display.HideDefense();
 		}
 	}
 

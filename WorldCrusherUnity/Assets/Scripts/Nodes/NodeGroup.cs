@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
-public class NodeGroup {
+public class NodeGroup : IEnumerable<Node> {
 
 	private HashSet<Node> _nodes = new HashSet<Node>();
 
 	private HashSet<Node> _flags = new HashSet<Node>();
+
+	public int Count { get { return _nodes.Count; } }
 
 	public void Add(Node node)
 	{
@@ -22,6 +25,13 @@ public class NodeGroup {
 	public Node PickRandom()
 	{
 		return new NodeList(_nodes).PickRandom();
+	}
+
+	public Node PopRandom()
+	{
+		Node node = new NodeList(_nodes).PickRandom();
+		_nodes.Remove(node);
+		return node;
 	}
 
 	public NodeList GetConnectedNodes(Node startNode, ExamineNodeConnection examineConnection = null, int max = -1)
@@ -73,5 +83,15 @@ public class NodeGroup {
 	private bool IsFlagged(Node node)
 	{
 		return _flags.Contains(node);
+	}
+
+	public IEnumerator<Node> GetEnumerator()
+	{
+		return _nodes.GetEnumerator();
+	}
+
+	IEnumerator IEnumerable.GetEnumerator()
+	{
+		return GetEnumerator();
 	}
 }

@@ -5,7 +5,6 @@ public enum FactionType {
 
     Player,
 	Enemy
-
 }
 
 public static class FactionTypeExtensions
@@ -15,11 +14,26 @@ public static class FactionTypeExtensions
 		switch (faction)
 		{
 			case FactionType.Player:
-				return Color.white;
+				return Game.Instance.interfaceManager.playerColor;
 			case FactionType.Enemy:
-				return new Color(0.3f, 0.3f, 0.3f);
+				return Game.Instance.interfaceManager.enemyColor;
+
 			default:
-				return Color.gray;
+				return Color.blue;
+		}
+	}
+
+	public static FactionType Other(this FactionType faction)
+	{
+		switch (faction)
+		{
+			case FactionType.Player:
+				return FactionType.Enemy;
+			case FactionType.Enemy:
+				return FactionType.Player;
+
+			default:
+				return FactionType.Player;
 		}
 	}
 }

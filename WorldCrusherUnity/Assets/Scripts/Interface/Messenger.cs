@@ -35,6 +35,12 @@ public class Messenger : MonoBehaviour {
 
 	public void OnGUI()
 	{
+		if (Game.Instance.IsRunning && !Game.Instance.interfaceManager.showHelp)
+			DisplayMessages();
+	}
+
+	private void DisplayMessages()
+	{
 		float margin = Game.Instance.interfaceManager.margin;
 
 		for (int i = 0; i < _messages.Count; i++)
@@ -44,6 +50,7 @@ public class Messenger : MonoBehaviour {
 			GUI.Label(rect, _messages[i], style);
 		}
 	}
+
 
 	// ================================================================================
 	//  public methods
@@ -58,6 +65,11 @@ public class Messenger : MonoBehaviour {
 
 		if (_messages.Count == 1)
 			timer = 0;
+	}
+
+	public void Clear()
+	{
+		_messages.Clear();
 	}
 
 	// ================================================================================
